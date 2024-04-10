@@ -14,7 +14,7 @@ const DogSchema = new Schema({
   favoriteSnack: String,
   gender: {
     type: String,
-    enum: ["female", "male"],
+    enum: ["hona", "hane"],
     required: true,
   },
   isNeutered: {

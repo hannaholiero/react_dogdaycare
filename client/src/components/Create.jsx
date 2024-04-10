@@ -85,8 +85,8 @@ const Create = () => {
                 onChange={handleChange}
               >
                 <option value="">KÖN</option>
-                <option value="female">Hona</option>
-                <option value="male">Hane</option>
+                <option value="hona">Hona</option>
+                <option value="hane">Hane</option>
               </select>
             </div>
             <div className="radio">
