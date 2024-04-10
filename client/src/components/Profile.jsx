@@ -1,12 +1,12 @@
 import React from "react";
 import { useDogs } from "../DogContext";
 import Card from "./Card";
-import "./index.css"; // Importera din CSS-fil här
+import "./index.css"; // Se till att denna fil finns och innehåller nödvändiga stilar
 
 const Profile = () => {
+  // Hämta funktioner och tillstånd från din DogContext med useDogs-hook
   const { dogs, isLoading, removeDogProfile, addFriend, removeFriend } =
     useDogs();
-  const [selectedFriendId, setSelectedFriendId] = useState("");
 
   // Hanterar borttagning av hundprofil
   const handleRemove = (id) => {
