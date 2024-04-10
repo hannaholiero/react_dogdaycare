@@ -1,0 +1,83 @@
+/* index.css */
+
+.cardWrapper {
+  background: var(--background-secondary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-3);
+  padding: 2rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.cardWrapper:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+/* index.css */
+.cardsWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+/* index.css */
+.cardImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 50%; /* Cirkulär form */
+  width: 80px; /* Storleken på avataren */
+  height: 80px; /* Storleken på avataren */
+  border: 2px solid #d3a588; /* Mörkare beige för cirkelns ram */
+  margin: 0 auto; /* Centrera avataren i CardWrapper */
+}
+
+.cardImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Täck området utan att sträcka bilden */
+}
+
+.cardInfo {
+  display: none; /* Default till "none", och ändras dynamiskt med JS */
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border-top: 2px solid #d3a588;
+}
+
+.dogName {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.infoRow {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editButton,
+.deleteButton {
+  background: #e8b4a8;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background: #d3a588;
+}
+
+.deleteButton {
+  background: #d3a588;
+}
+
+.deleteButton:hover {
+  background: #e8b4a8;
+}
+
+.cardInfo.show {
+  display: block;
+}
