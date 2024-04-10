@@ -64,11 +64,11 @@ router.patch("/:id", async (req, res) => {
 // Lägger till en vän
 router.put("/:id/friends/:friendId", async (req, res) => {
   try {
-    const { dogId, friendId } = req.params;
+    const { id, friendId } = req.params;
 
     // Lägg till friendId till dogId:s vänlista
     const dog = await Dog.findByIdAndUpdate(
-      dogId,
+      id,
       { $addToSet: { friends: friendId } }, // Använd $addToSet för att undvika dubbletter
       { new: true }
     ).populate("friends");
@@ -76,7 +76,7 @@ router.put("/:id/friends/:friendId", async (req, res) => {
     // Lägg till dogId till friendId:s vänlista
     const friend = await Dog.findByIdAndUpdate(
       friendId,
-      { $addToSet: { friends: dogId } }, // Använd $addToSet för att undvika dubbletter
+      { $addToSet: { friends: id } }, // Använd $addToSet för att undvika dubbletter
       { new: true }
     );
 
@@ -92,11 +92,11 @@ router.put("/:id/friends/:friendId", async (req, res) => {
 
 router.delete("/:id/friends/:friendId", async (req, res) => {
   try {
-    const { dogId, friendId } = req.params;
+    const { id, friendId } = req.params;
 
     // Ta bort friendId från dogId:s vänlista
     await Dog.findByIdAndUpdate(
-      dogId,
+      id,
       { $pull: { friends: friendId } },
       { new: true }
     );
@@ -104,7 +104,7 @@ router.delete("/:id/friends/:friendId", async (req, res) => {
     // Ta bort dogId från friendId:s vänlista
     await Dog.findByIdAndUpdate(
       friendId,
-      { $pull: { friends: dogId } },
+      { $pull: { friends: id } },
       { new: true }
     );
 

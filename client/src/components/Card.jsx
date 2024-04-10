@@ -7,11 +7,7 @@ const Card = ({ dog, dogs, onRemove, addFriend }) => {
   const [selectedFriendId, setSelectedFriendId] = useState("");
 
   // Toggle funktion för att expandera/minimera kort
-  const toggleExpand = (e) => {
-    // Förhindrar att event bubblar vid klick inuti kortet
-    e.stopPropagation();
-    setIsExpanded(!isExpanded);
-  };
+  const toggleExpand = () => setIsExpanded(!isExpanded);
 
   // Hanterar ändring i select för att välja en vän
   const handleSelectChange = (e) => {
@@ -19,47 +15,59 @@ const Card = ({ dog, dogs, onRemove, addFriend }) => {
     setSelectedFriendId(e.target.value);
   };
 
-  // Hanterar klick för att lägga till en vän baserat på valt vän-ID
-  const handleAddFriendClick = (e) => {
-    e.stopPropagation(); // Stoppar event bubbling
+  const handleAddFriend = async () => {
     if (selectedFriendId) {
-      addFriend(dog._id, selectedFriendId);
-      setSelectedFriendId("");
-    }
-  };
-  const handleAddFriend = (e) => {
-    if (selectedFriendId) {
-      addFriend(dog._id, selectedFriendId);
-      setSelectedFriendId(""); // Återställer dropdown efter lyckat tillägg
+      try {
+        await addFriend(dog._id, selectedFriendId);
+        setSelectedFriendId(""); // Återställer dropdown
+      } catch (error) {
+        console.error("Error adding friend:", error);
+      }
     }
   };
 
   return (
-    <div className="cardWrapper" onClick={toggleExpand}>
-      <img
-        src={dog.imageUrl || "default-dog-image.jpg"}
-        alt={dog.firstname}
-        className="cardImg"
-      />
-      <div className="dogName">{dog.firstname}</div>
+    <div className="cardWrapper">
+      {/* Klickbar rubrik för att expandera/minimera kortet */}
+      <div className="cardHeader" onClick={toggleExpand}>
+        <img
+          src={dog.imageUrl || "default-dog-image.jpg"}
+          alt={dog.firstname}
+          className="cardImg"
+        />
+        <div className="dogName">{dog.firstname}</div>
+      </div>
       <div className={`cardInfo ${isExpanded ? "show" : ""}`}>
-        {/* Kortinformation här */}
+        <div>
+          Ålder:{" "}
+          {new Date().getFullYear() - new Date(dog.birthday).getFullYear()} år
+        </div>
+        <div>Kön: {dog.gender}</div>
+        <div>Favoritsnack: {dog.favoriteSnack || "Inget"}</div>
+        <div>Kastrerad: {dog.isNeutered ? "Ja" : "Nej"}</div>
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Förhindrar bubbling till cardWrapper
+            e.stopPropagation();
             onRemove(dog._id);
           }}
         >
           Ta bort
         </button>
         <select
-          onChange={(e) => setSelectedFriendId(e.target.value)}
+          onChange={handleSelectChange}
           value={selectedFriendId}
+          onClick={(e) => e.stopPropagation()}
         >
           <option disabled value="">
             Välj en vän...
           </option>
-          {/* Rendera vän-optioner här */}
+          {dogs
+            .filter((d) => d._id !== dog._id)
+            .map((friend) => (
+              <option key={friend._id} value={friend._id}>
+                {friend.firstname}
+              </option>
+            ))}
         </select>
         <button onClick={handleAddFriend}>Lägg till vän</button>
       </div>

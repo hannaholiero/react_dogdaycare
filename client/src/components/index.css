@@ -20,6 +20,10 @@
   padding: 1rem;
 }
 
+.cardHeader {
+  border: 2px solid pink;
+}
+
 /* index.css */
 .cardImg {
   display: flex;

@@ -54,12 +54,12 @@ export const DogProvider = ({ children }) => {
       console.error("Error adding dog profile:", error);
     }
   };
-  const addFriend = async (dogId, friendId) => {
+
+  const addFriend = async (id, friendId) => {
     try {
       const response = await axios.put(`/api/dogs/${id}/friends/${friendId}`);
-      // Efter att vän har lagts till, du kan antingen hämta hundarna på nytt eller uppdatera state lokalt
-      console.log("Vän tillagd:", response.data);
-      // Här kan du välja att uppdatera din lokala state eller göra en ny fetch för att hämta uppdaterade data
+      console.log("Friend added:", response.data);
+      // Uppdatera UI eller hantera svaret ytterligare här
     } catch (error) {
       console.error("Error adding friend:", error);
     }
