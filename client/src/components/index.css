@@ -49,7 +49,7 @@ body {
 }
 
 .cardInfo {
-  display: none; /* Default till "none", och ändras dynamiskt med JS */
+  display: block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
   border-top: 2px solid #d3a588;
@@ -129,7 +129,7 @@ small,
 }
 
 .form {
-  width: 90vw;
+  width: 100vw;
   max-width: var(--fixed-width);
   background: var(--background-secondary-color);
   border-radius: var(--border-radius);
@@ -232,14 +232,15 @@ small,
   margin: 10px;
 }
 .radio input {
-  padding-bottom: 10px;
+  padding-bottom: 1rem;
   margin-top: 0.5rem;
 }
 
-.checkbox {
-  border-left: 2px solid var(--primary-500);
-  padding: 10px;
+.form-label input {
   display: flex;
+  width: 1rem;
+  height: 1rem;
+  padding-left: 1rem;
 }
 
 .title {
@@ -284,4 +285,29 @@ select {
   border-radius: 0.25rem;
   color: var(--primary-800);
   cursor: pointer;
+}
+
+.navbar {
+  height: 60px;
+  background-color: black;
+  position: relative;
+}
+
+.friendslist {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border: 1px solid var(--primary-300);
+  color: var(--text-color);
+}
+
+.friends-name {
+  font-size: var(--small-text);
+  letter-spacing: var(--letter-spacing);
+  padding: 1rem;
+  text-transform: uppercase;
+}
+
+.friends-checkbox {
+  padding-left: 1rem;
 }

@@ -1,0 +1,40 @@
+/* Navbar.module.css */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+:root {
+  --primary-color: #9e887a; /* primary500 */
+  --text-color: #fff; /* white */
+  --hover-color: #f5ddbc; /* primary200, för hover-effekter */
+  --nav-height: 4rem; /* Anpassad höjd baserad på ditt tema */
+  --border-radius: 0.25rem; /* Från ditt tema */
+  --box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow1 från ditt tema */
+}
+
+.navbar {
+  background-color: var(--primary-color);
+  box-shadow: var(--box-shadow);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--nav-height);
+  font-family: "Open Sans", sans-serif;
+}
+
+.navLink {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition);
+
+  /* Stil för att visa en visuell feedback när användaren hovrar över en länk */
+}
+
+.navLink:hover,
+.navLink:focus {
+  background-color: var(--hover-color);
+  color: var(--primary-color);
+}
+
+/* Lägg till extra stilar här baserat på ditt behov */

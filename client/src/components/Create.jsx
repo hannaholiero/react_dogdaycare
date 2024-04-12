@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useDogs } from "../DogContext"; // Importera useDogs hook
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { DogContext } from "../DogContext"; // Korrekt import av DogContext
 import Logo from "./Logo";
 import Wrapper from "../wrappers/DogProfileForm";
 
@@ -10,11 +11,23 @@ const Create = () => {
     favoriteSnack: "",
     gender: "",
     isNeutered: false,
+    description: "",
+    friends: [],
   });
+  const [selectedFriends, setSelectedFriends] = useState([]);
+  const navigate = useNavigate();
+  console.log("test");
+  const { addDogProfile, fetchDogImage, dogs, fetchAllDogs } =
+    useContext(DogContext);
 
-  const { addDogProfile, fetchDogImage } = useDogs(); // Använd fetchDogImage från context
+  useEffect(() => {
+    fetchAllDogs(); // Detta anrop kommer att se till att alla hundar hämtas när komponenten laddas
+  }, []); // Lägg till fetchAllDogs som en beroende för att undvika oändliga loopar
+  // OVAN NYTT, NEDAN GAMLA
+  // }, [fetchAllDogs]); // Lägg till fetchAllDogs som en beroende för att undvika oändliga loopar
 
   const handleChange = (e) => {
+    console.log("change");
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
@@ -22,11 +35,30 @@ const Create = () => {
     });
   };
 
+  const handleCheckboxChange = (event) => {
+    console.log("change2");
+    const { checked, value } = event.target;
+    if (checked) {
+      setSelectedFriends((prev) => [...prev, value]);
+    } else {
+      setSelectedFriends((prev) => prev.filter((id) => id !== value));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const imageUrl = await fetchDogImage(); // Hämta bild-URL
-    const completeFormData = { ...formData, imageUrl }; // Lägg till imageUrl i formData
-    addDogProfile(completeFormData); // Använd den uppdaterade datan med bilden
+    const imageUrl = await fetchDogImage(); // Antag att fetchDogImage returnerar URL-strängen direkt
+    const completeFormData = {
+      ...formData,
+      friends: selectedFriends,
+      imageUrl,
+    };
+    try {
+      await addDogProfile(completeFormData); // Antag att addDogProfile returnerar ett promise
+      navigate("/"); // Använd navigate för att omdirigera användaren efter en lyckad operation
+    } catch (error) {
+      console.error("Failed to add dog profile:", error);
+    }
   };
 
   return (
@@ -102,8 +134,36 @@ const Create = () => {
               </label>
             </div>
           </div>
+          <div className="form-row">
+            <label htmlFor="description" className="form-label">
+              BESKRIVNING
+            </label>
+            <input
+              className="form-input"
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Skriv några rader om hunden?"
+            />
+          </div>
+          <fieldset>
+            <legend>Välj Vänner:</legend>
+            {dogs.map((friendDog) => (
+              <div key={friendDog._id}>
+                <input
+                  type="checkbox"
+                  id={friendDog._id}
+                  value={friendDog._id}
+                  checked={selectedFriends.includes(friendDog._id)}
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor={friendDog._id}>{friendDog.firstname}</label>
+              </div>
+            ))}
+          </fieldset>
           <button type="submit" className="btn btn-block">
-            Add Dog
+            Lägg till hund
           </button>
         </form>
       </Wrapper>
