@@ -77,6 +77,7 @@ export const DogProvider = ({ children }) => {
     try {
       await axios.delete(`/api/dogs/${id}`);
       setDogs((prev) => prev.filter((dog) => dog._id !== id));
+      fetchAllDogs();
     } catch (error) {
       console.error("Error removing dog profile:", error);
     }

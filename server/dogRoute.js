@@ -17,8 +17,8 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { friends = [], ...dogDetails } = req.body;
-
-    const newDog = new Dog({ ...dogDetails });
+    console.log(req.body);
+    const newDog = new Dog({ friends, ...dogDetails });
     const savedDog = await newDog.save();
 
     // Uppdatera vänlistan för varje specificerad vän
