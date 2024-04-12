@@ -3,7 +3,6 @@ import hunddagis from "../assets/logo-hunddagis.png";
 import LandingPageWrapper from "../wrappers/LandingPage";
 
 const Start = () => {
-  console.log("startsida");
   return (
     <LandingPageWrapper>
       <div className="container page">

@@ -20,11 +20,11 @@ const Edit = () => {
     description: "",
     friends: [],
   });
-  console.log("hej");
+
   useEffect(() => {
     const loadDogData = async () => {
       const dogData = await fetchDogById(id);
-      //console.log(dogData);
+
       if (dogData) {
         setFormData({
           firstname: dogData.firstname || "",
@@ -35,8 +35,6 @@ const Edit = () => {
           description: dogData.description || "",
           friends: dogData.friends.map((friend) => friend._id) || [],
         });
-        console.log(formData.friends);
-        //console.log(formData.friends.map((friend) => friend._id));
       } else {
         navigate("/profile"); // Redirect if no dogData is fetched
       }
@@ -66,6 +64,7 @@ const Edit = () => {
     e.preventDefault();
     try {
       await updateDogProfile(id, formData);
+
       alert("Hundprofil uppdaterad!");
       navigate("/profile"); // Navigate back to profile page after update
     } catch (error) {

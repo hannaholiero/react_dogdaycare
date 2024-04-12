@@ -8,12 +8,12 @@ const Profile = () => {
   const { dogs, isLoading, fetchAllDogs, removeDogProfile } =
     useContext(DogContext);
   const navigate = useNavigate();
-  console.log("profile-sida");
+
   useEffect(() => {
     if (dogs.length === 0) {
       fetchAllDogs();
     }
-  }, [fetchAllDogs]);
+  }, []);
 
   const handleEdit = (id) => {
     navigate(`/edit/${id}`);
@@ -31,8 +31,9 @@ const Profile = () => {
             key={dog._id}
             dog={dog}
             onDelete={() => removeDogProfile(dog._id)}
-            onEdit={handleEdit}
-            friends={dogs.filter((d) => dog.friends.includes(d._id))}
+            onEdit={() => navigate(`/edit/${dog._id}`)}
+            friends={dog.friends || []}
+            // friends={dogs.filter((d) => dog.friends.includes(d._id))}
           />
         ))
       ) : (

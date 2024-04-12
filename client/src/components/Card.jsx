@@ -2,6 +2,11 @@ import React from "react";
 import "./index.css";
 
 const Card = ({ dog, onDelete, onEdit, friends }) => {
+  const handleDelete = (id) => {
+    if (window.confirm("Är du säker på att du vill ta bort denna hund?")) {
+      onDelete(id);
+    }
+  };
   return (
     <div className="cardWrapper">
       <div className="cardHeader">
@@ -21,7 +26,10 @@ const Card = ({ dog, onDelete, onEdit, friends }) => {
         <p>Favvosnacks: {dog.favoriteSnack || "Inget"}</p>
         <p>Kastrerad: {dog.isNeutered ? "Ja" : "Nej"}</p>
         <p>Beskrivning: {dog.description || "Ingen beskrivning"}</p>
-        <button onClick={() => onDelete(dog._id)} className="delete-button">
+        {/* <button onClick={() => onDelete(dog._id)} className="delete-button">
+          Ta bort
+        </button> */}
+        <button onClick={() => handleDelete(dog._id)} className="delete-button">
           Ta bort
         </button>
         <button className="edit-button" onClick={() => onEdit(dog._id)}>
@@ -29,11 +37,27 @@ const Card = ({ dog, onDelete, onEdit, friends }) => {
         </button>
         <div className="friends-area">
           <h4>{dog.firstname}'s vänner</h4>
+          {friends.length > 0 ? (
+            <ul>
+              {friends.map(
+                (friend) =>
+                  friend._id && <li key={friend._id}>{friend.firstname}</li>
+              )}
+            </ul>
+          ) : (
+            // <ul>
+            //   {friends.map((friend) => (
+            //     <li key={friend._id}>{friend.firstname}</li>
+            //   ))}
+            // </ul>
+            <p>Inga vänner listade.</p>
+          )}
+          {/* <h4>{dog.firstname}'s vänner</h4>
           <ul>
             {friends.map((friend) => (
               <li key={friend._id}>{friend.firstname}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </div>

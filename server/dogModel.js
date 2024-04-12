@@ -21,6 +21,9 @@ const DogSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  description: {
+    type: String,
+  },
   imageUrl: {
     // Lägg till detta fält för att spara bild-URL
     type: String,
@@ -28,7 +31,7 @@ const DogSchema = new Schema({
   },
   friends: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Dog", // Refererar till Dog-modellen
     },
   ],

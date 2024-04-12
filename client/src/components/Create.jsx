@@ -16,18 +16,14 @@ const Create = () => {
   });
   const [selectedFriends, setSelectedFriends] = useState([]);
   const navigate = useNavigate();
-  console.log("test");
   const { addDogProfile, fetchDogImage, dogs, fetchAllDogs } =
     useContext(DogContext);
 
   useEffect(() => {
     fetchAllDogs(); // Detta anrop kommer att se till att alla hundar hämtas när komponenten laddas
-  }, []); // Lägg till fetchAllDogs som en beroende för att undvika oändliga loopar
-  // OVAN NYTT, NEDAN GAMLA
-  // }, [fetchAllDogs]); // Lägg till fetchAllDogs som en beroende för att undvika oändliga loopar
+  }, []);
 
   const handleChange = (e) => {
-    console.log("change");
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
@@ -45,6 +41,19 @@ const Create = () => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const completeFormData = {
+  //     ...formData,
+  //     friends: selectedFriends, // Antag att detta är en array med ID:n för vänner
+  //   };
+  //   try {
+  //     await addDogProfile(completeFormData);
+  //     navigate("/profile"); // Omdirigera efter framgång
+  //   } catch (error) {
+  //     console.error("Failed to add dog profile:", error);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const imageUrl = await fetchDogImage(); // Antag att fetchDogImage returnerar URL-strängen direkt
@@ -55,7 +64,7 @@ const Create = () => {
     };
     try {
       await addDogProfile(completeFormData); // Antag att addDogProfile returnerar ett promise
-      navigate("/"); // Använd navigate för att omdirigera användaren efter en lyckad operation
+      navigate("/profile"); // Använd navigate för att omdirigera användaren efter en lyckad operation
     } catch (error) {
       console.error("Failed to add dog profile:", error);
     }

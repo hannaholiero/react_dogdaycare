@@ -16,7 +16,7 @@ export const DogProvider = ({ children }) => {
   const fetchAllDogs = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get("/api/dogs");
+      const { data } = await axios.get("/api/dogs/");
       setDogs(data);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -53,8 +53,20 @@ export const DogProvider = ({ children }) => {
   const addDogProfile = async (dogData) => {
     try {
       const imageUrl = await fetchDogImage();
-      const { data } = await axios.post("/api/dogs", { ...dogData, imageUrl });
-      setDogs((prevDogs) => [...prevDogs, data]);
+      const { data: newDog } = await axios.post("/api/dogs", {
+        ...dogData,
+        imageUrl,
+      });
+      setDogs((prevDogs) => [...prevDogs, newDog]);
+      fetchAllDogs();
+      console.log(dogData);
+      // Nu, uppdatera varje vald väns vänlista för att inkludera den nya hunden
+      // const friendUpdates = dogData.friends.map((friendId) =>
+      //   axios.put(`/api/dogs/${friendId}/friends`, { friendId: newDog._id })
+      // );
+      // // Vänta tills alla vänuppdateringar är klara
+      // await Promise.all(friendUpdates);
+
       // setFriends((prevFriends) => [...prevFriends, data]);
     } catch (error) {
       console.error("Error adding dog profile:", error);
@@ -70,32 +82,28 @@ export const DogProvider = ({ children }) => {
     }
   };
 
-  const addFriend = async (dogId, friendId) => {
-    try {
-      await axios.put(`/api/dogs/${dogId}/friends`, { friendId });
-      fetchAllDogs(); // Refresh data
-    } catch (error) {
-      console.error("Error adding friend:", error);
-    }
-  };
+  // const addFriend = async (dogId, friendId) => {
+  //   try {
+  //     await axios.put(`/api/dogs/${dogId}/friends`, { friendId });
+  //     fetchAllDogs(); // Refresh data
+  //   } catch (error) {
+  //     console.error("Error adding friend:", error);
+  //   }
+  // };
 
-  const removeFriend = async (dogId, friendId) => {
-    try {
-      await axios.delete(`/api/dogs/${dogId}/friends/${friendId}`);
-      fetchAllDogs(); // Refresh data
-    } catch (error) {
-      console.error("Error removing friend:", error);
-    }
-  };
+  // const removeFriend = async (dogId, friendId) => {
+  //   try {
+  //     await axios.delete(`/api/dogs/${dogId}/friends/${friendId}`);
+  //     fetchAllDogs(); // Refresh data
+  //   } catch (error) {
+  //     console.error("Error removing friend:", error);
+  //   }
+  // };
   const updateDogProfile = async (id, dogData) => {
     try {
       const response = await axios.patch(`/api/dogs/${id}`, dogData);
       if (response.data) {
-        setDogs((prevDogs) =>
-          prevDogs.map((dog) =>
-            dog._id === id ? { ...dog, ...response.data } : dog
-          )
-        );
+        setDogs(response.data);
         return response.data; // Returnera den uppdaterade hunden för vidare användning
       }
     } catch (error) {
@@ -116,8 +124,6 @@ export const DogProvider = ({ children }) => {
         fetchDogById,
         addDogProfile,
         removeDogProfile,
-        addFriend,
-        removeFriend,
         updateDogProfile,
       }}
     >
