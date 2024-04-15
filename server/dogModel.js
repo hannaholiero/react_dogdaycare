@@ -24,20 +24,21 @@ const DogSchema = new Schema({
   description: {
     type: String,
   },
+  isPresent: {
+    type: Boolean,
+  },
   imageUrl: {
-    // Lägg till detta fält för att spara bild-URL
     type: String,
-    required: false, // Inte obligatoriskt om du inte alltid kommer att ha en bild för varje hund
+    required: false,
   },
   friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Dog", // Refererar till Dog-modellen
+      ref: "Dog",
     },
   ],
 });
 
-// Kompilera och exportera vår modell med ovanstående definition.
 const Dog = mongoose.model("Dog", DogSchema);
 
 export default Dog;

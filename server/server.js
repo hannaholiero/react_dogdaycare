@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import dogRoute from "./dogRoute.js"; // Ensure this path matches the location of your dogRoute.js file
+import dogRoute from "./dogRoute.js";
 import cors from "cors";
 dotenv.config();
 
@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 mongoose
   .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("Connected to MongoDB"))

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DogContext } from "../DogContext";
 import Logo from "./Logo";
-// import Wrapper from "../wrappers/DogProfileForm";
 import "./index.css";
 
 const Edit = () => {
@@ -17,6 +16,7 @@ const Edit = () => {
     favoriteSnack: "",
     gender: "",
     isNeutered: false,
+    isPresent: false,
     description: "",
     friends: [],
   });
@@ -32,11 +32,12 @@ const Edit = () => {
           favoriteSnack: dogData.favoriteSnack || "",
           gender: dogData.gender || "",
           isNeutered: dogData.isNeutered || false,
+          isPresent: dogData.isPresent || false,
           description: dogData.description || "",
           friends: dogData.friends.map((friend) => friend._id) || [],
         });
       } else {
-        navigate("/profile"); // Redirect if no dogData is fetched
+        navigate("/profile");
       }
     };
     loadDogData();
@@ -66,7 +67,7 @@ const Edit = () => {
       await updateDogProfile(id, formData);
 
       alert("Hundprofil uppdaterad!");
-      navigate("/profile"); // Navigate back to profile page after update
+      navigate("/profile");
     } catch (error) {
       console.error("Failed to update dog profile:", error);
       alert("Kunde inte uppdatera hundprofilen.");
@@ -155,6 +156,18 @@ const Edit = () => {
                 />
               </label>
             </div>
+            <div className="radio">
+              <label htmlFor="isPresent" className="form-label">
+                På plats idag
+                <input
+                  type="checkbox"
+                  name="isPresent"
+                  id="isPresent"
+                  checked={formData.isPresent}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
           </div>
           <div className="form-row">
             <label htmlFor="description" className="form-label">
@@ -191,6 +204,11 @@ const Edit = () => {
             Uppdatera Hund
           </button>
         </form>
+        <div className="flex-center">
+          <button className="btn" onClick={() => navigate(`/profile`)}>
+            Gå tillbaka
+          </button>
+        </div>
       </div>
     </div>
   );

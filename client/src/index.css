@@ -66,9 +66,9 @@ html {
   --dark-mode-bg-secondary-color: #120f0d;
   --dark-mode-text-secondary-color: var(--primary-200);
 
-  --background-color: var(--primary-50);
+  --background-color: var(--primary-100);
   --text-color: var(--primary-900);
-  --background-secondary-color: var(--white);
+  --background-secondary-color: var(--primary-50);
   --text-secondary-color: #69735f;
 }
 
@@ -84,9 +84,8 @@ body {
   color: var(--text-color);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1;
-  text-transform: uppercase;
 }
 p {
   margin: 0;
@@ -97,18 +96,19 @@ h3,
 h4,
 h5 {
   margin: 0;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: var(--letter-spacing);
 }
 
 h1 {
   font-size: clamp(2rem, 5vw, 5rem);
-  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.81); /* Large heading */
+  text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.81); /* Large heading */
 }
 
 h2 {
   font-size: clamp(1.5rem, 3vw, 3rem); /* Medium heading */
+  text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.81);
 }
 
 h3 {
@@ -160,7 +160,8 @@ ul {
   border: transparent;
   border-radius: var(--border-radius);
   letter-spacing: var(--letter-spacing);
-  padding: 0.375rem 0.75rem;
+  padding: 0.5rem 1rem;
+  font-weight: 100;
   box-shadow: var(--shadow-1);
   transition: var(--transition);
   display: inline-block;
