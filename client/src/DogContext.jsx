@@ -38,7 +38,7 @@ export const DogProvider = ({ children }) => {
   };
 
   const fetchDogById = async (id) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       const { data } = await axios.get(`/api/dogs/${id}`);
       setDog(data);
@@ -46,7 +46,7 @@ export const DogProvider = ({ children }) => {
     } catch (error) {
       console.error("Error fetching dog by id:", error);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -70,7 +70,7 @@ export const DogProvider = ({ children }) => {
       await axios.delete(`/api/dogs/${id}`);
       setDogs((prev) => prev.filter((dog) => dog._id !== id));
       alert("Profilen borttagen!");
-      fetchAllDogs();
+      // fetchAllDogs();
     } catch (error) {
       console.error("Error removing dog profile:", error);
     }

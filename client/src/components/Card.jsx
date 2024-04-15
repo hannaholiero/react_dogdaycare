@@ -14,6 +14,7 @@ const Card = ({ dog, onDelete, onHandleProfile, onEdit, friends }) => {
   const handleDelete = (id) => {
     if (window.confirm("Är du säker på att du vill ta bort denna hund?")) {
       onDelete(id);
+      navigate("/profile");
     }
   };
 
